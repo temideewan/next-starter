@@ -1,0 +1,26 @@
+import { Card, CardBody, User } from "@nextui-org/react";
+import { getServerSession } from "next-auth";
+
+import options from "@/config/auth";
+
+const Page = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+  const session = await getServerSession(options);
+
+  return (
+    <Card className="mx-auto mt-4 max-w-md">
+      <CardBody>
+        <User
+          name={session?.user?.name}
+          description={session?.user?.email}
+          avatarProps={{
+            showFallback: !session?.user?.email,
+            src: session?.user?.image || "",
+          }}
+        />
+      </CardBody>
+    </Card>
+  );
+};
+
+export default Page;
